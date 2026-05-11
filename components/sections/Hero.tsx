@@ -1,255 +1,200 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "../ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { motion, Variants } from "framer-motion";
+import { useMobile } from "@/hooks/use-mobile";
+
+// ---------------------------------------------------------------------------
+// Animation Variants
+// ---------------------------------------------------------------------------
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.3,
+    },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.21, 0.47, 0.32, 0.98] as const,
+    },
+  },
+};
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
 interface HeroProps {
-  /** Path to your photo — put in /public, e.g. "/photo.jpg" */
-  photoSrc: "/unBGPhotos.png";
-  photoAlt: "Profile Photo";
+  photoSrc?: string;
+  photoAlt?: string;
+  isReady?: boolean;
 }
-
-// ---------------------------------------------------------------------------
-// Data
-// ---------------------------------------------------------------------------
-
-const STACK = ["Next.js", "TypeScript", "Node.js", "Solidity", "Python", "PostgreSQL"];
 
 // ---------------------------------------------------------------------------
 // Sub-components
 // ---------------------------------------------------------------------------
 
-function PulseDot({ className }: { className?: string }) {
+function Navbar() {
   return (
-    <span
-      className={cn(
-        "inline-block w-2 h-2 rounded-full bg-primary animate-pulse",
-        className
-      )}
-    />
+    <motion.nav
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.8, delay: 0.5 }}
+      className="flex items-center justify-between px-6 sm:px-12 py-8 relative z-50 w-full"
+    >
+    </motion.nav>
   );
 }
 
-function TrustBar() {
-  const items = ["1+ Yrs Full-Stack", "MSc Cybersecurity", "DeFi / Web3"];
+function FeatureItem({ number, label, title }: { number: string; label: string; title: string }) {
   return (
-    <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-10">
-      {items.map((item, i) => (
-        <div key={item} className="flex items-center gap-3 sm:gap-4">
-          {i > 0 && <span className="text-white/10 text-sm select-none">·</span>}
-          <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground/40">
-            {item}
-          </span>
-        </div>
-      ))}
-    </div>
+    <motion.div variants={itemVariants} className="flex flex-col gap-1.5 group cursor-default">
+      <span className="text-[10px] font-bold text-primary tracking-tighter opacity-70 group-hover:opacity-100 transition-opacity">
+        {number}
+      </span>
+      <span className="text-[11px] font-bold uppercase tracking-widest text-white/30 group-hover:text-white/50 transition-colors">
+        {label}
+      </span>
+      <span className="text-sm font-semibold text-white/80">{title}</span>
+    </motion.div>
   );
 }
 
-function PhotoCard({ src, alt }: { src?: string; alt?: string }) {
+export function Hero({
+  photoSrc = "/unBGPhotos.png",
+  photoAlt = "Profile Photo",
+  isReady = false,
+}: HeroProps) {
+  const isMobile = useMobile();
+
   return (
-    <div className="relative w-full aspect-[3/4] rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden">
-      {src ? (
-        <Image
-          src={src}
-          alt={alt ?? "Profile photo"}
-          fill
-          className="object-cover object-top"
-          sizes="(max-width: 1024px) 50vw, 240px"
-          priority
-        />
-      ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-          <div className="w-14 h-14 rounded-full border border-dashed border-white/[0.08] flex items-center justify-center">
-            <svg
-              width="22"
-              height="22"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              viewBox="0 0 24 24"
-              className="text-white/15"
-            >
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-            </svg>
+    <section className="relative min-h-screen flex flex-col bg-background overflow-hidden">
+
+      {/* ── Background Elements ── */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Vibrant Tech-Noir Gradient */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,oklch(0.7_0.25_250_/_0.2),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_40%,oklch(0.7_0.25_250_/_0.1),transparent_40%)]" />
+
+        {/* Profile Image - Centered (desktop) / Top-right (mobile) */}
+        <motion.div
+          initial={{ opacity: 0, scale: 1.1, y: 50 }}
+          animate={isReady ? { opacity: 0.6, scale: 1, y: 0 } : { opacity: 0 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className={cn(
+            "absolute",
+            isMobile
+              ? "bottom-[30%] right-[-5%] w-[60vw] max-w-[320px]"
+              : "inset-0 flex items-center justify-center mt-20"
+          )}
+        >
+          <div className={cn(
+            "relative aspect-square",
+            isMobile ? "w-full" : "w-full max-w-[800px] lg:max-w-[1400px]"
+          )}>
+            <Image
+              src={photoSrc}
+              alt={photoAlt}
+              fill
+              sizes={isMobile ? "300px" : "(max-width: 1024px) 800px, 1400px"}
+              className="object-contain object-bottom grayscale brightness-75 contrast-125"
+              priority
+            />
+            {/* Gradient mask */}
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+            {isMobile && (
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-background" />
+            )}
           </div>
-          <span className="text-[10px] text-white/15 tracking-[0.25em] uppercase font-medium">
-            Photo
-          </span>
-        </div>
-      )}
-      {/* Bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background to-transparent pointer-events-none" />
-    </div>
-  );
-}
-
-function StackCard() {
-  return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4">
-      <p className="text-[9px] font-semibold uppercase tracking-[0.25em] text-white/20 mb-3">
-        Stack
-      </p>
-      <div className="flex flex-wrap gap-1.5">
-        {STACK.map((tech) => (
-          <span
-            key={tech}
-            className="text-[10px] px-2 py-0.5 rounded-md border border-primary/15 bg-primary/[0.06] text-primary/70 font-medium"
-          >
-            {tech}
-          </span>
-        ))}
+        </motion.div>
       </div>
-    </div>
-  );
-}
 
-function AchievementCard() {
-  return (
-    <div className="rounded-xl border border-primary/15 bg-primary/[0.04] p-4">
-      <p className="text-[9px] font-semibold uppercase tracking-[0.25em] text-primary/50 mb-2">
-        Achievement
-      </p>
-      <p className="text-[12px] text-fore/80 font-medium leading-snug">
-        IEEE SCOReD 2024 Best Paper Award
-      </p>
-      <a href="https://ieeexplore.ieee.org/document/10872676/" className="text-[10px] font-medium leading-snug">View Paper</a>
-    </div>
-  );
-}
+      {/* ── Main Content ── */}
+      <div className="relative z-10 flex flex-col flex-1">
 
-// ---------------------------------------------------------------------------
-// Main Hero
-// ---------------------------------------------------------------------------
+        <Navbar />
 
-export function Hero({ photoSrc, photoAlt }: HeroProps) {
-  return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Keyframes for drifting orbs */}
-      <style>{`
-        @keyframes drift-1 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          25% { transform: translate(60px, -40px) scale(1.1); }
-          50% { transform: translate(-30px, 50px) scale(0.95); }
-          75% { transform: translate(40px, 20px) scale(1.05); }
-        }
-        @keyframes drift-2 {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(-50px, 30px) scale(1.08); }
-          66% { transform: translate(40px, -60px) scale(0.92); }
-        }
-        @keyframes drift-3 {
-          0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
-          50% { transform: translate(30px, -20px) scale(1.15); opacity: 0.7; }
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isReady ? "show" : "hidden"}
+          className="flex-1 flex flex-col justify-between px-5 sm:px-8 lg:px-12 pt-2 sm:pt-8 pb-8 sm:pb-12"
+        >
+          {/* Middle Content Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-0 items-center mt-0 sm:mt-12">
+            {/* Left: Massive Typography */}
+            <div className="lg:col-span-8 flex flex-col">
+              <motion.span variants={itemVariants} className="text-base sm:text-lg lg:text-xl font-semibold tracking-[0.15em] text-primary mb-3 sm:mb-4">
+                HEY, I&apos;M A
+              </motion.span>
+              <motion.h1
+                variants={itemVariants}
+                className="text-[2.5rem] sm:text-6xl md:text-7xl xl:text-[9rem] font-black leading-[0.9] tracking-[-0.04em] uppercase"
+              >
+                Secure <br />
+                <span className="text-white/10 outline-text">Systems</span> <br />
+                Engineer
+              </motion.h1>
+            </div>
+
+            {/* Right: Secondary Description */}
+            <div className="lg:col-span-4 lg:pl-12">
+              <motion.div variants={itemVariants} className="max-w-sm lg:max-w-xs lg:ml-auto">
+                <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 leading-tight">
+                  I build secure systems and break insecure ones.
+                </h3>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                  Full-stack expertise in Next.js &amp; TypeScript blended with advanced MSc research in blockchain vulnerabilities and DeFi security.
+                </p>
+
+                <Link
+                  href="#contact"
+                  className={cn(
+                    buttonVariants({ size: "lg" }),
+                    "rounded-full bg-primary hover:bg-primary/90 text-white mt-6 sm:mt-8 px-8 h-14 group gap-3 shadow-lg shadow-primary/30 text-sm font-semibold"
+                  )}
+                >
+                  Get in Touch
+                  <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center transition-transform group-hover:rotate-45">
+                    <ArrowUpRight className="w-4 h-4 text-white" />
+                  </div>
+                </Link>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Bottom: Numbered Trust Bar */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 py-8 sm:py-12 border-t border-white/10">
+            <FeatureItem number="#01" label="Core Expertise" title="Full-Stack Engineering" />
+            <FeatureItem number="#02" label="Research Focus" title="Smart Contract Security" />
+            <FeatureItem number="#03" label="Track Record" title="1+ Year Industry Exp" />
+            <FeatureItem number="#04" label="Academic Level" title="MSc Cybersecurity" />
+          </div>
+
+        </motion.div>
+      </div>
+
+      <style jsx global>{`
+        .outline-text {
+          -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.15);
+          color: transparent;
         }
       `}</style>
-
-      {/* ── Animated atmospheric orbs ── */}
-      <div
-        aria-hidden
-        className="absolute top-[-20%] right-[-10%] w-[700px] h-[500px] bg-primary/[0.06] rounded-full blur-[180px] pointer-events-none"
-        style={{ animation: "drift-1 20s ease-in-out infinite" }}
-      />
-      <div
-        aria-hidden
-        className="absolute bottom-[-15%] left-[-5%] w-[500px] h-[400px] bg-accent/[0.04] rounded-full blur-[160px] pointer-events-none"
-        style={{ animation: "drift-2 25s ease-in-out infinite" }}
-      />
-      <div
-        aria-hidden
-        className="absolute top-[40%] right-[30%] w-[300px] h-[300px] bg-primary/[0.03] rounded-full blur-[120px] pointer-events-none"
-        style={{ animation: "drift-3 18s ease-in-out infinite" }}
-      />
-      {/* Subtle floating particles */}
-      <div
-        aria-hidden
-        className="absolute top-[20%] left-[15%] w-1 h-1 rounded-full bg-primary/30 animate-pulse"
-      />
-      <div
-        aria-hidden
-        className="absolute top-[35%] right-[20%] w-0.5 h-0.5 rounded-full bg-white/20 animate-pulse [animation-delay:1s]"
-      />
-      <div
-        aria-hidden
-        className="absolute bottom-[30%] left-[40%] w-0.5 h-0.5 rounded-full bg-primary/20 animate-pulse [animation-delay:2s]"
-      />
-
-      <div className="container mx-auto px-5 sm:px-6 py-20 md:py-0 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-16 lg:gap-20">
-
-          {/* ── Left: Content ── */}
-          <div className="flex-1 min-w-0 max-w-2xl">
-            {/* Status pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/[0.08] border border-primary/15 text-accent text-xs font-medium mb-8">
-              <PulseDot />
-              Open to Collaborate
-            </div>
-
-            {/* Headline — large, impactful */}
-            <h1 className="text-[2.75rem] sm:text-6xl md:text-7xl xl:text-[5.5rem] font-bold tracking-[-0.03em] leading-[1.05] mb-6">
-              I build{" "}
-              <span className="text-primary text-glow">secure</span>
-              <br className="hidden sm:block" />{" "}
-              systems and break
-              <br className="hidden sm:block" />{" "}
-              insecure ones.
-            </h1>
-
-            {/* Subtitle */}
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-lg mb-8">
-              <strong className="text-foreground/60 font-medium">
-                Full-Stack Engineer &amp; Security Researcher.
-              </strong>{" "}
-              I ship production-grade systems in Next.js / TypeScript and research
-              cross-chain bridge vulnerabilities at MSc level.
-            </p>
-
-            {/* Trust bar */}
-            <TrustBar />
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                href="#contact"
-                className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/25 gap-2 px-6 h-11 text-sm font-semibold"
-                )}
-              >
-                Contact Me
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="#projects"
-                className={cn(
-                  buttonVariants({ size: "lg", variant: "outline" }),
-                  "border-white/[0.08] hover:bg-white/[0.04] text-muted-foreground px-6 h-11 text-sm"
-                )}
-              >
-                View Projects
-              </Link>
-            </div>
-          </div>
-
-          {/* ── Right: Profile sidebar ── */}
-          <div className="w-full max-w-[300px] lg:w-[280px] flex-shrink-0 flex flex-col gap-3">
-            <PhotoCard src={photoSrc} alt={photoAlt} />
-            {/* Stack + Achievement side by side */}
-            <div className="grid grid-cols-2 gap-3">
-              <StackCard />
-              <AchievementCard />
-            </div>
-            {/* Sliding card slot — future implementation */}
-          </div>
-
-        </div>
-      </div>
     </section>
   );
 }
