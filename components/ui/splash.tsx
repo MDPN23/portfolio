@@ -8,7 +8,7 @@ interface SplashProps {
 }
 
 export default function Splash({ onComplete }: SplashProps) {
-    const targetText = "Hello Im Nares, Nice To Meet You";
+    const targetText = "Hello I'm Nares, Nice To Meet You";
     const [displayText, setDisplayText] = useState("");
     const [phase, setPhase] = useState<'scramble' | 'orbit' | 'fade'>('scramble');
 

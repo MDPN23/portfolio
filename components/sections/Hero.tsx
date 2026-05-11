@@ -83,13 +83,17 @@ export function Hero({
   const isMobile = useMobile();
 
   return (
-    <section className="relative min-h-screen flex flex-col bg-background overflow-hidden">
+    <section className="relative min-h-screen flex flex-col">
 
-      {/* ── Background Elements ── */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      {/* ── Fixed Global Background Gradients ── */}
+      <div className="fixed inset-0 z-[-1] pointer-events-none bg-background">
         {/* Vibrant Tech-Noir Gradient */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,oklch(0.7_0.25_250_/_0.2),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_40%,oklch(0.7_0.25_250_/_0.1),transparent_40%)]" />
+      </div>
+
+      {/* ── Hero-Specific Background Elements (Profile Image) ── */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]">
 
         {/* Profile Image - Centered (desktop) / Top-right (mobile) */}
         <motion.div
@@ -115,8 +119,9 @@ export function Hero({
               className="object-contain object-bottom grayscale brightness-75 contrast-125"
               priority
             />
-            {/* Gradient mask */}
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+            {/* Minimal mask just for the top edge if needed */}
+            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-transparent" />
+
             {isMobile && (
               <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-background" />
             )}
