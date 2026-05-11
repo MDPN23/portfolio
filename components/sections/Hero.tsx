@@ -10,8 +10,8 @@ import { ArrowRight } from "lucide-react";
 
 interface HeroProps {
   /** Path to your photo — put in /public, e.g. "/photo.jpg" */
-  photoSrc?: string;
-  photoAlt?: string;
+  photoSrc: "/unBGPhotos.png";
+  photoAlt: "Profile Photo";
 }
 
 // ---------------------------------------------------------------------------
