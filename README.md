@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Adversarial Portfolio | Nareswara
 
-## Getting Started
+![Adversarial Engineer](https://img.shields.io/badge/Persona-Adversarial%20Engineer-red?style=for-the-badge)
+![Tech Stack](https://img.shields.io/badge/Stack-Next.js%2015%20|%20TypeScript%20|%20Tailwind-blue?style=for-the-badge)
+![Security](https://img.shields.io/badge/Focus-Security%20by%20Design-black?style=for-the-badge)
 
-First, run the development server:
+High-performance, tech-noir inspired portfolio landing page for **Muhammad Dzikri Pandu Nareswara**. Designed to bridge technical research (IEEE-standard cryptography) with professional full-stack execution.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+> "I build secure systems and break insecure ones."
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌑 Aesthetic & Philosophy
+- **Tech-Noir Vibe**: Atmospheric dark mode with cinematic grain textures, glowing accents, and high-precision monospaced elements inspired by `ten.xyz`.
+- **Security-First**: Every line of code is written with an adversarial mindset, prioritizing data integrity and cryptographic robustness.
+- **Performance**: Built with Next.js (App Router) and Turbopack for near-instant interaction and ultra-sharp responsiveness.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Technical Arsenal
+- **Frontend**: Next.js 15, TypeScript, Tailwind CSS
+- **Design**: Radix UI, Lucide Icons, Glassmorphism
+- **Security**: AES-256 implementation research, DeFi bridge vulnerability analysis
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Getting Started
 
-## Learn More
+### Prerequisites
+- [Bun](https://bun.sh) (Recommended) or Node.js
 
-To learn more about Next.js, take a look at the following resources:
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/MDPN23/portfolio.git
+   cd portfolio
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Install dependencies:
+   ```bash
+   bun install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Run the development server:
+   ```bash
+   bun dev
+   ```
 
-## Deploy on Vercel
+Open [http://localhost:3000](http://localhost:3000) to view the result.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📁 Project Structure
+- `app/`: Next.js App Router configuration and global styles.
+- `components/sections/`: Modular landing page sections (Hero, Projects, Research, etc.).
+- `lib/data.ts`: Centralized content management for easy updates.
+- `public/`: Static assets and PDF research documents.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🏆 Research Highlights
+- **IEEE SCOReD 2024 Best Paper Award**: Secure Implementation of Population Data Encryption Using AES-256.
+- **MSc Cybersecurity**: Focused on Double Spending & Replay Attack mitigation in DeFi Bridges.
+
+---
+Built by [Nareswara](https://github.com/MDPN23)
