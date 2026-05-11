@@ -6,7 +6,7 @@ export const personalInfo = {
   subHeadline: "Bridging the gap between IEEE-standard cryptographic research and high-performance, real-world application security.",
   bio: "I am a solution-oriented engineer dedicated to helping businesses build secure and high-performance digital foundations. By integrating adversarial insights with a deep understanding of business needs, I provide technical solutions that safeguard growth and ensure long-term resilience in an evolving digital landscape.",
   email: "mdpnnareswara@gmail.com",
-  linkedin: "https://linkedin.com/in/muhammad-dzikri-pandu-nareswara",
+  linkedin: "https://www.linkedin.com/in/muhammad-dzikri-pandu-nareswara/",
   github: "https://github.com/MDPN23",
   resume: "/docs/resume.pdf",
 };
@@ -57,7 +57,7 @@ export const projects = [
   {
     title: "Tirta Siaga Bantul",
     category: "GIS Website",
-    description: "Flood early warning monitoring platform for Bantul Regency, DI Yogyakarta. Displays real-time water quality, water flow, and weather forecast data to support disaster preparedness.",
+    description: "Advanced GIS platform for mapping and monitoring water springs across Bantul Regency. Features spatial data visualization and environmental distribution analysis to support sustainable water resource management.",
     tags: ["React", "TypeScript", "Leaflet", "GIS"],
     link: "https://tirtasiagabantul.vercel.app/",
     metric: "GIS Web Application",

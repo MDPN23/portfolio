@@ -149,7 +149,7 @@ export function Hero({
               </motion.span>
               <motion.h1
                 variants={itemVariants}
-                className="text-[2.5rem] sm:text-6xl md:text-7xl xl:text-[9rem] font-black leading-[0.9] tracking-[-0.04em] uppercase"
+                className="text-[2.5rem] sm:text-6xl md:text-7xl xl:text-[9rem] font-heading font-black leading-[0.9] tracking-[-0.04em] uppercase"
               >
                 Secure <br />
                 <span className="text-white/10 outline-text">Systems</span> <br />
@@ -158,8 +158,8 @@ export function Hero({
             </div>
 
             {/* Right: Secondary Description */}
-            <div className="lg:col-span-4 lg:pl-12">
-              <motion.div variants={itemVariants} className="max-w-sm lg:max-w-xs lg:ml-auto">
+            <div className="lg:col-span-4 flex items-center">
+              <motion.div variants={itemVariants} className="max-w-sm lg:max-w-xs">
                 <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 leading-tight">
                   I build secure systems and break insecure ones.
                 </h3>
@@ -196,7 +196,7 @@ export function Hero({
 
       <style jsx global>{`
         .outline-text {
-          -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.15);
+          -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.7);
           color: transparent;
         }
       `}</style>

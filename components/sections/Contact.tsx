@@ -62,7 +62,7 @@ export function Contact() {
         </motion.div>
 
         <motion.div
-          className="relative w-240 h-240 mx-auto mt-[-16rem] mb-[-48rem]"
+          className="relative w-240 h-240 mx-auto mt-[-16rem] mb-[-48rem] pointer-events-none"
         >
           <Image
             src="/circular.png"
@@ -103,30 +103,31 @@ function ContactLink({ href, icon, label, value, color }: {
   };
 
   const glowClasses = {
-    primary: "group-hover:shadow-[0_0_20px_rgba(var(--primary),0.3)]",
-    white: "group-hover:shadow-[0_0_20px_rgba(255,255,255,0.1)]",
-    blue: "group-hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]",
+    primary: "group-hover:shadow-[0_0_30px_oklch(var(--primary)/0.2)] group-hover:border-primary/30",
+    white: "group-hover:shadow-[0_0_30px_oklch(0.99_0.01_260/0.1)] group-hover:border-white/20",
+    blue: "group-hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] group-hover:border-blue-400/30",
   };
 
   return (
     <motion.div
-      whileHover={{ y: -5 }}
-      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+      whileHover={{ y: -8, scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 400, damping: 15 }}
     >
       <Link
         href={href}
-        target={href.startsWith("http") ? "_blank" : undefined}
-        rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-        className="flex items-center gap-4 p-5 md:p-6 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/5 transition-all group min-w-[200px]"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`flex items-center gap-4 p-5 md:p-6 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/5 transition-all duration-300 group min-w-[220px] ${glowClasses[color]}`}
       >
-        <div className={`p-3 rounded-xl ${colorClasses[color]} group-hover:scale-110 ${glowClasses[color]} transition-all duration-500`}>
+        <div className={`p-3 rounded-xl ${colorClasses[color]} group-hover:rotate-12 group-hover:scale-110 transition-all duration-500`}>
           {icon}
         </div>
         <div className="flex flex-col items-start text-left">
-          <span className="text-[10px] uppercase tracking-widest text-muted-foreground mb-0.5 font-bold">{label}</span>
-          <div className="flex items-center gap-1">
-            <span className="font-semibold text-white/90 group-hover:text-white transition-colors">{value}</span>
-            <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-50 transition-all -translate-y-1" />
+          <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-1 font-bold">{label}</span>
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-white/80 group-hover:text-white transition-colors tracking-tight">{value}</span>
+            <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all -translate-y-0 group-hover:-translate-y-1 group-hover:translate-x-1" />
           </div>
         </div>
       </Link>
