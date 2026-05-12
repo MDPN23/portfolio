@@ -43,7 +43,6 @@ next-env.d.ts
 # agent & configs
 AGENTS.md
 CLAUDE.md
-bun.lock
 Landing.md
 Architecture.md
 
